@@ -17,9 +17,9 @@ class ProjectController extends Controller
 			'title' => 'required',
 			'description' => 'required'
 		]);
-		auth()->user()->projects()->create($attributes);
+		$project = auth()->user()->projects()->create($attributes);
 		//Project::create($attributes);
-		return redirect('/projects');
+		return redirect($project->path());
 	}
 	public function show(Project $project){
 		if(auth()->user()->isNot($project->owner) ){
