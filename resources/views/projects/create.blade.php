@@ -1,17 +1,15 @@
-
-<!DOCTYPE html>
-@extends('layouts.app')
+@extends ('layouts.app')
 @section('content')
-<h1>Create New Project</h1>
-<form method="POST" action="/projects" >
-  @csrf
-  <div class="form-group">
-    <input type="field" name="title" placeholder="title" />
-  </div>
-  <div class="form-group">
-    <input type="field"  name="description" placeholder="description" />
-  </div>
-  <button type="submit" >Submit</button>
-  <a href="/projects">cancel</a>
+<form method="POST" action="/projects" class="lg:w-1/2 lg:mx-auto bg-white py-12 px-16 rounded shadow">
+    @csrf
+
+    <h1 class="text-2xl font-normal mb-10 text-center">Let’s start something new</h1>
+
+    @include('projects.form' , 
+        [
+
+            'project' => new App\Project , 
+            'buttonText' => 'Add Project'
+            ])
 </form>
-@endsection 
+@endsection
