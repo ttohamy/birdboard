@@ -1,1 +1,1 @@
-You uncompleted a task 
+You uncompleted a {{$activity->subject->body}} 
