@@ -17,10 +17,15 @@ class ProjectTasksController extends Controller
     public function update(Project $project , Task $task){
         $this->authorize('update' , $task->project);  
         request()->validate(['body'=>'required']);
-    	$task->update([
-    			'body'=>request('body'),
-    			'completed' => request()->has('completed')
-    	]);
+    	$task->update(['body'=>request('body')]);
+        $method = request('completed') ? $task->complete() : $task->incomplete() ;
+        // $project->recordActivity('updated_task');
+        // $task->$method();
+        // if(request('completed')){
+        //     $task->complete();
+        // }else {
+        //     $task->incomplete();
+        // }
     	return 	redirect($project->path());
     }
 }

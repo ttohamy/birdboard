@@ -39,7 +39,7 @@ class ProjectController extends Controller
 		return view('projects.edit',compact('project'));
 		
 	}
-	public function validateRequest(){
+	protected function validateRequest(){
 		$attributes = request()->validate([
 			'title' => 'sometimes|required',
 			'description' => 'sometimes|required' ,
