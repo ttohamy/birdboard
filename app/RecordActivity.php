@@ -1,7 +1,7 @@
 <?php 
 namespace App; 
 use App\Activity ; 
-
+use App\Project;
 trait RecordActivity
 {
 	public $old = [] ; 
@@ -20,8 +20,10 @@ trait RecordActivity
 	}
 	public function recordActivity($description){
 		$this->activity()->create([
+			//if the model has a relationship with the project return the relation else return this
+			'user_id' => ($this->project ??  $this)->owner->id ,
 			'description'=> $description ,
-			'project_id' =>class_basename($this)==='Project'?$this->id : $this->project_id,
+			'project_id' =>(class_basename($this)==='Project')?$this->id : $this->project_id,
 			'changes' => $this->activityChanges()
 		]);
 	}
@@ -36,14 +38,17 @@ trait RecordActivity
 		}
 	}
 	public function activity(){
-		return $this->morphMany(Activity::class , 'subject')->latest();
+		if (get_class($this) === Project::class) {
+			return $this->hasMany(Activity::class)->latest();
+		}
+		return $this->morphMany(Activity::class, 'subject')->latest();
 	}
 
 	public static function recordableEvents(){
 		if(isset(static::$recordableEvents)){
 			return static::$recordableEvents;
 		}else {
-			return  ['created','updated','deleted']; 
+			return  ['created','updated']; 
 		}
 
 	}
