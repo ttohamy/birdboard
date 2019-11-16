@@ -8,8 +8,7 @@ use App\Project;
 class ProjectController extends Controller
 {
 	public function index(){
-		//$projects = Project::all();
-		$projects = auth()->user()->projects;
+		$projects = auth()->user()->accessible_projects();
 		return view('projects.index',compact('projects'));
 	}
 	public function store(){

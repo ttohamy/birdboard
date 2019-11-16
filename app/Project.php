@@ -23,7 +23,7 @@ class Project extends Model
 	public function addTask($body){
 		return 	$this->tasks()->create(compact('body'));
 	}
-	public function invite(User $user)
+	public function invite(user $user)
 	{
 		return $this->members()->attach($user);	
 
