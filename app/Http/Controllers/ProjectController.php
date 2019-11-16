@@ -25,6 +25,11 @@ class ProjectController extends Controller
 	public function create(){
 		return view('projects.create');
 	}
+	public function destroy(Project $project){
+		$this->authorize('update' , $project);		
+		$project->delete() ; 
+		return redirect('projects');
+	}
 	public function update(Project $project){
 		// if(auth()->user()->isNot($project->owner)){
 		// 	abort(403);

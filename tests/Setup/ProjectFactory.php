@@ -7,16 +7,15 @@ use App\Task ;
 class ProjectFactory{
 	protected $tasksCount = 0 ; 
 	protected $user ;
-
 	public function create(){
 		$project = factory(Project::class)->create(
 			[
-				'owner_id' => $this->user ?? factory(User::class)
+				'owner_id' => $this->user ?? factory(User::class)->create()
 			]
 		); 
 		factory(Task::class , $this->tasksCount )->create(
 			[
-				'project_id' => $project->id
+				'project_id' => $project
 
 			]
 		);
@@ -31,6 +30,6 @@ class ProjectFactory{
 		$this->user = $user;
 		return $this;
 	}
-
+	
 
 }
